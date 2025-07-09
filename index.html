@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Birthday Video Countdown</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    #birthdayMessage, #myVideo, #countdown {
+      display: none;
+    }
+
+    #birthdayMessage {
+      font-size: 3em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #startBtn {
+      padding: 15px 30px;
+      font-size: 20px;
+      cursor: pointer;
+      background: #ffffff;
+      color: black;
+      border: none;
+      border-radius: 8px;
+    }
+
+    #countdown {
+      font-size: 4em;
+      margin-bottom: 20px;
+    }
+
+    video {
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="countdown"></div>
+  <div id="birthdayMessage">Happy Birthday Sam!!!!!</div>
+
+  <video id="myVideo" loop playsinline>
+    <source src="https://i.imgur.com/y30zU0w.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <button id="startBtn">Click to Start</button>
+
+  <script>
+    const video = document.getElementById('myVideo');
+    const button = document.getElementById('startBtn');
+    const message = document.getElementById('birthdayMessage');
+    const countdown = document.getElementById('countdown');
+
+    function runCountdown() {
+      let count = 3;
+      countdown.textContent = count;
+      countdown.style.display = 'block';
+
+      const interval = setInterval(() => {
+        count--;
+        if (count > 0) {
+          countdown.textContent = count;
+        } else {
+          clearInterval(interval);
+          countdown.style.display = 'none';
+          message.style.display = 'block';
+          video.style.display = 'block';
+          video.muted = false;
+          video.play();
+        }
+      }, 1000);
+    }
+
+    button.addEventListener('click', () => {
+      button.style.display = 'none';
+      runCountdown();
+    });
+  </script>
+
+</body>
+</html>
