@@ -67,25 +67,32 @@
     const message = document.getElementById('birthdayMessage');
     const countdown = document.getElementById('countdown');
 
-    function runCountdown() {
-      let count = 3;
-      countdown.textContent = count;
-      countdown.style.display = 'block';
+function runCountdown() {
+  let count = 3;
+  countdown.textContent = count;
+  countdown.style.display = 'block';
 
-      const interval = setInterval(() => {
-        count--;
-        if (count > 0) {
-          countdown.textContent = count;
-        } else {
-          clearInterval(interval);
-          countdown.style.display = 'none';
-          message.style.display = 'block';
-          video.style.display = 'block';
-          video.muted = false;
-          video.play();
-        }
-      }, 1000);
+  const interval = setInterval(() => {
+    count--;
+    if (count > 0) {
+      countdown.textContent = count;
+    } else {
+      clearInterval(interval);
+      countdown.style.display = 'none';
+      message.style.display = 'block';
+      video.style.display = 'block';
+
+      // Start muted to satisfy autoplay policies
+      video.muted = true;
+      video.play().then(() => {
+        // Unmute after playback starts
+        video.muted = false;
+      }).catch((e) => {
+        console.warn('Playback failed:', e);
+      });
     }
+  }, 1000);
+}
 
     button.addEventListener('click', () => {
       button.style.display = 'none';
